@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 4 – It Won't Happen to Me | כיתה ט</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #181c27;
+  --surface2: #1f2435;
+  --border: #2a3045;
+  --teal: #00c9b1;
+  --teal-dim: #00806f;
+  --gold: #f5a623;
+  --rose: #ff5c7a;
+  --blue: #4a9eff;
+  --purple: #9b6bff;
+  --green: #3dd68c;
+  --text: #e8ecf5;
+  --text-muted: #8892a4;
+  --text-dim: #5a6278;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --glow-teal: 0 0 20px rgba(0,201,177,0.25);
+  --glow-gold: 0 0 20px rgba(245,166,35,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  direction: rtl;
+}
+
+/* ── SCORE BAR ── */
+#score-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,17,23,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.score-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--teal);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.score-track {
+  flex: 1;
+  height: 8px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+.score-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  transition: width 0.6s cubic-bezier(.23,1,.32,1);
+  width: 0%;
+}
+.score-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--teal);
+  white-space: nowrap;
+  min-width: 54px;
+  text-align: left;
+}
+.score-pts {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 56px 24px 48px;
+  text-align: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,201,177,0.08) 0%, transparent 70%);
+  border-bottom: 1px solid var(--border);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.hero-unit {
+  display: inline-block;
+  background: var(--teal);
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 99px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 6vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  direction: ltr;
+}
+.hero h1 span { color: var(--teal); }
+.hero-sub {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+.hero-pill {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── TABS ── */
+.tabs-nav {
+  display: flex;
+  overflow-x: auto;
+  gap: 4px;
+  padding: 16px 20px 0;
+  border-bottom: 1px solid var(--border);
+  max-width: 960px;
+  margin: 0 auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: 49px;
+  z-index: 90;
+  background: var(--bg);
+}
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  border-radius: 6px 6px 0 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text); background: var(--surface); }
+.tab-btn.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+  background: var(--surface);
+}
+.tab-score-badge {
+  display: inline-block;
+  background: var(--surface2);
+  border-radius: 99px;
+  padding: 1px 8px;
+  font-size: 11px;
+  margin-right: 6px;
+  color: var(--text-dim);
+  font-family: 'Space Mono', monospace;
+}
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+.tab-panel.active { display: block; }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.sec-num {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px; font-weight: 700;
+  color: #000;
+  flex-shrink: 0;
+}
+.sec-title { font-size: 18px; font-weight: 700; }
+.sec-ref {
+  margin-right: auto;
+  font-size: 11px;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* ── GRAMMAR BOX ── */
+.grammar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.grammar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 4px; height: 100%;
+  background: var(--teal);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.grammar-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+.grammar-rule {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--blue);
+  margin-bottom: 14px;
+  direction: ltr;
+  text-align: left;
+}
+.grammar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.grammar-ex {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  direction: ltr;
+  text-align: left;
+}
+.grammar-ex .en { color: var(--text); margin-bottom: 3px; }
+.grammar-ex .en strong { color: var(--teal); }
+.grammar-ex .he { color: var(--text-muted); font-size: 12px; direction: rtl; text-align: right; }
+.usage-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.usage-chip {
+  background: rgba(0,201,177,0.1);
+  border: 1px solid rgba(0,201,177,0.25);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+/* ── EXERCISE CARD ── */
+.ex-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+.ex-instr {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.55;
+  padding: 10px 14px;
+  background: rgba(74,158,255,0.06);
+  border-radius: var(--radius-sm);
+  border-right: 3px solid var(--blue);
+}
+
+/* ── FILL IN THE BLANK ── */
+.sentence-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  direction: ltr;
+  text-align: left;
+}
+.sentence-row:last-child { border-bottom: none; }
+.sent-num {
+  color: var(--text-muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  min-width: 22px;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+.fill-input {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+  font-size: 13.5px;
+  padding: 4px 10px;
+  min-width: 110px;
+  transition: border-color 0.2s;
+  direction: ltr;
+  text-align: left;
+}
+.fill-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,201,177,0.12); }
+.fill-input.correct { border-color: var(--green); background: rgba(61,214,140,0.08); }
+.fill-input.wrong { border-color: var(--rose); background: rgba(255,92,122,0.08); }
+.fill-input.locked { pointer-events: none; opacity: 0.85; }
+.fill-input.small { min-width: 80px; }
+.fill-input.large { min-width: 160px; }
+
+/* select input */
+.fill-select {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+  font-size: 13px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.fill-select:focus { outline: none; border-color: var(--teal); }
+.fill-select.correct { border-color: var(--green); }
+.fill-select.wrong { border-color: var(--rose); }
+.fill-select.locked { pointer-events: none; opacity: 0.85; }
+
+/* radio group */
+.radio-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.radio-opt {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  transition: all 0.2s;
+}
+.radio-opt:hover { border-color: var(--teal); }
+.radio-opt input[type=radio] { accent-color: var(--teal); }
+.radio-opt.correct-opt { border-color: var(--green); background: rgba(61,214,140,0.08); }
+.radio-opt.wrong-opt { border-color: var(--rose); background: rgba(255,92,122,0.08); }
+.radio-opt.locked { pointer-events: none; opacity: 0.85; }
+
+/* free write */
+.free-textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 90px;
+  transition: border-color 0.2s;
+  direction: ltr;
+  text-align: left;
+}
+.free-textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,201,177,0.10); }
+.free-textarea.locked { pointer-events: none; opacity: 0.85; }
+
+/* attempt indicator */
+.attempt-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 8px;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  transition: all 0.3s;
+}
+.dot.used { background: var(--gold); border-color: var(--gold); }
+.dot.correct { background: var(--green); border-color: var(--green); }
+.dot.wrong { background: var(--rose); border-color: var(--rose); }
+.dot.locked { background: var(--text-dim); border-color: var(--text-dim); }
+
+/* feedback */
+.feedback-msg {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 6px;
+  display: none;
+}
+.feedback-msg.show { display: inline-block; }
+.feedback-msg.ok { background: rgba(61,214,140,0.12); color: var(--green); }
+.feedback-msg.bad { background: rgba(255,92,122,0.1); color: var(--rose); }
+.feedback-msg.answer { background: rgba(74,158,255,0.1); color: var(--blue); }
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.btn {
+  border: none;
+  border-radius: 8px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 9px 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-check {
+  background: linear-gradient(135deg, var(--teal), #00a890);
+  color: #000;
+}
+.btn-check:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-check:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn-reset {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.btn-reset:hover { border-color: var(--rose); color: var(--rose); }
+
+/* ── DIALOGUE CARD ── */
+.dialogue-box {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+.dialogue-line {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px;
+  direction: ltr;
+  text-align: left;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.dialogue-line:last-child { border-bottom: none; }
+.speaker {
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 68px;
+  flex-shrink: 0;
+}
+
+/* ── TIP BOX ── */
+.tip-box {
+  background: rgba(245,166,35,0.07);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #d4a030;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.tip-icon { font-size: 16px; flex-shrink: 0; }
+
+/* ── PHRASE BANK ── */
+.phrase-bank {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.phrase-bank-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.phrase-bank ul {
+  padding-right: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.phrase-bank li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 13px;
+  color: var(--text);
+  direction: ltr;
+}
+
+/* ── VOCAB GRID ── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.vocab-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+.vocab-en { font-weight: 700; color: var(--teal); font-size: 14px; direction: ltr; text-align: left; }
+.vocab-he { color: var(--text-muted); font-size: 13px; margin-top: 3px; }
+
+/* ── SCORE CELEBRATION ── */
+.score-display {
+  text-align: center;
+  padding: 30px 20px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.score-big {
+  font-family: 'Space Mono', monospace;
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--teal);
+  line-height: 1;
+}
+.score-big span { color: var(--text-dim); font-size: 36px; }
+
+/* ── RESET (per tab) ── */
+.tab-reset-bar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .grammar-grid { grid-template-columns: 1fr; }
+  .tabs-nav { padding: 12px 12px 0; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ SCORE BAR ══════ -->
+<div id="score-bar">
+  <div class="score-logo">UNIT 4</div>
+  <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
+  <div class="score-pts" id="score-pts">0 / 16 תרגילים</div>
+  <div class="score-label" id="score-label">0 / 100</div>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<div class="hero">
+  <div class="hero-unit">יחידה 4 · כיתה ט</div>
+  <h1>Unit 4 – <span>"It Won't Happen to Me"</span></h1>
+  <div class="hero-sub">דף עבודה אינטראקטיבי | ספר עמ' 82–84 + חוברת עמ' 66–70</div>
+  <div class="hero-pills">
+    <span class="hero-pill">💾 תשובות נשמרות אוטומטית</span>
+    <span class="hero-pill">✏️ 2 ניסיונות לכל תרגיל</span>
+    <span class="hero-pill">📊 ניקוד שוטף</span>
+  </div>
+</div>
+
+<!-- ══════ TABS NAV ══════ -->
+<div class="tabs-nav" id="tabs-nav">
+  <button class="tab-btn active" onclick="switchTab('grammar')" id="tab-grammar">📖 דקדוק</button>
+  <button class="tab-btn" onclick="switchTab('alice')" id="tab-alice">💬 Alice <span class="tab-score-badge" id="badge-alice">0</span></button>
+  <button class="tab-btn" onclick="switchTab('wantto')" id="tab-wantto">🗣️ want to <span class="tab-score-badge" id="badge-wantto">0</span></button>
+  <button class="tab-btn" onclick="switchTab('goingto')" id="tab-goingto">📅 be going to <span class="tab-score-badge" id="badge-goingto">0</span></button>
+  <button class="tab-btn" onclick="switchTab('progfut')" id="tab-progfut">🎯 Present Progressive <span class="tab-score-badge" id="badge-progfut">0</span></button>
+  <button class="tab-btn" onclick="switchTab('will')" id="tab-will">🔮 will / won't <span class="tab-score-badge" id="badge-will">0</span></button>
+</div>
+
+<!-- ════════════════════════════════════
+     TAB: GRAMMAR
+════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-grammar">
+  <div class="sec-header">
+    <div class="sec-num">📖</div>
+    <div class="sec-title">דקדוק – שלוש צורות לדבר על העתיד</div>
+  </div>
+
+  <!-- BE GOING TO -->
+  <div class="grammar-card">
+    <div class="grammar-label">① Future "BE going to" — לתוכניות קרובות</div>
+    <div style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+      אנו משתמשים בזמן זה כדי לספר על <strong style="color:var(--teal)">תוכניות לעתיד הקרוב</strong>. (= אני מתכנן/ת)
+    </div>
+    <div class="grammar-rule">[ am / is / are ] + going to + verb (base form)</div>
+    <div class="grammar-grid">
+      <div class="grammar-ex">
+        <div class="en">Alice <strong>is going to have</strong> a guitar lesson soon.</div>
+        <div class="he">לאליס תהיה שיעור גיטרה בקרוב.</div>
+      </div>
+      <div class="grammar-ex">
+        <div class="en"><strong>Is</strong> she <strong>going to have</strong> a lesson at 6?</div>
+        <div class="he">האם יש לה שיעור בשש?</div>
+      </div>
+      <div class="grammar-ex">
+        <div class="en">No, she <strong>isn't going to have</strong> it at 6.</div>
+        <div class="he">לא, אין לה שיעור בשש.</div>
+      </div>
+      <div class="grammar-ex">
+        <div class="en"><strong>When is</strong> Alice <strong>going to have</strong> a lesson?</div>
+        <div class="he">מתי יהיה לאליס שיעור?</div>
+      </div>
+    </div>
+    <div class="usage-row">
+      <span class="usage-chip">📅 tomorrow</span>
+      <span class="usage-chip">📅 next week</span>
+      <span class="usage-chip">📅 soon</span>
+      <span class="usage-chip">📅 in a few minutes</span>
+    </div>
+    <div style="margin-top:14px; background:var(--surface2); border-radius:8px; padding:12px 14px; font-size:13px;">
+      <strong style="color:var(--gold)">טבלת גזרה:</strong>
+      <table style="width:100%; margin-top:8px; font-size:13px; border-collapse:collapse; direction:ltr; text-align:left;">
+        <tr>
+          <td style="padding:4px 10px; color:var(--text-muted)">I</td>
+          <td style="padding:4px 10px; color:var(--teal)"><strong>am going to</strong> study</td>
+          <td style="padding:4px 10px; color:var(--rose)"><strong>am not going to</strong> study</td>
+        </tr>
+        <tr style="background:rgba(255,255,255,0.03)">
+          <td style="padding:4px 10px; color:var(--text-muted)">He / She / It</td>
+          <td style="padding:4px 10px; color:var(--teal)"><strong>is going to</strong> study</td>
+          <td style="padding:4px 10px; color:var(--rose)"><strong>is not going to</strong> study</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 10px; color:var(--text-muted)">You / We / They</td>
+          <td style="padding:4px 10px; color:var(--teal)"><strong>are going to</strong> study</td>
+          <td style="padding:4px 10px; color:var(--rose)"><strong>are not going to</strong> study</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PRESENT PROGRESSIVE FUTURE -->
+  <div class="grammar-card" style="--teal:#9b6bff;">
+    <div class="grammar-label" style="color:var(--purple)">② Present Progressive — הווה ממושך עם משמעות לעתיד</div>
+    <div style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+      כידוע לכם, משתמשים בהווה ממושך לתאר פעולות ממושכות. <strong style="color:var(--purple)">אך ניתן להשתמש בו גם לדבר על תוכניות מסודרות בעתיד הקרוב</strong>.
+    </div>
+    <div class="grammar-rule" style="color:#9b6bff;">[ am / is / are ] + verb + ing</div>
+    <div class="grammar-grid">
+      <div class="grammar-ex">
+        <div class="en">Mark <strong>is driving</strong> us to Green Park <em>tonight</em>.</div>
+        <div class="he">מארק מסיע אותנו הלילה (= is going to drive)</div>
+      </div>
+      <div class="grammar-ex">
+        <div class="en">You <strong>are babysitting</strong> Bobby <em>this evening</em>.</div>
+        <div class="he">את שומרת על בובי הערב (= are going to babysit)</div>
+      </div>
+    </div>
+    <div class="tip-box" style="margin-top:12px; margin-bottom:0;">
+      <span class="tip-icon">💡</span>
+      <span>ה-Present Progressive לעתיד מופיע עם ביטויי זמן כמו: <strong>tonight / this evening / tomorrow / in a few days</strong></span>
+    </div>
+  </div>
+
+  <!-- WILL -->
+  <div class="grammar-card" style="border-right-color:var(--gold);">
+    <div class="grammar-label" style="color:var(--gold)">③ Future "will" — לעובדות, תחזיות, הבטחות</div>
+    <div style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+      משתמשים ב-will כדי:
+    </div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
+      <div style="background:var(--surface2); border-radius:8px; padding:12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--gold); margin-bottom:6px;">עובדות</div>
+        <div style="font-size:12.5px; direction:ltr; text-align:left;">Today is Sunday. Tomorrow <strong style="color:var(--gold)">will be</strong> Monday.</div>
+      </div>
+      <div style="background:var(--surface2); border-radius:8px; padding:12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--gold); margin-bottom:6px;">תחזיות</div>
+        <div style="font-size:12.5px; direction:ltr; text-align:left;">You <strong style="color:var(--gold)">will be</strong> a famous writer one day.</div>
+      </div>
+      <div style="background:var(--surface2); border-radius:8px; padding:12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--gold); margin-bottom:6px;">הבטחות</div>
+        <div style="font-size:12.5px; direction:ltr; text-align:left;">We <strong style="color:var(--gold)">will pick</strong> you up at 9:30.</div>
+      </div>
+    </div>
+    <div class="grammar-rule" style="color:var(--gold);">will + verb (base form) | won't = will not</div>
+    <div style="margin-top:12px; background:var(--surface2); border-radius:8px; padding:12px 14px; font-size:13px;">
+      <strong style="color:var(--gold)">שלילה וחיוב:</strong>
+      <div style="direction:ltr; text-align:left; margin-top:6px;">
+        <div>I <strong style="color:var(--teal)">will</strong> be happy. / I <strong style="color:var(--teal)">'ll</strong> be happy.</div>
+        <div style="margin-top:4px;">I <strong style="color:var(--rose)">will not</strong> be sad. / I <strong style="color:var(--rose)">won't</strong> be sad.</div>
+        <div style="margin-top:4px;"><strong style="color:var(--gold)">Will</strong> you help me? → Yes, I <strong style="color:var(--teal)">will</strong>. / No, I <strong style="color:var(--rose)">won't</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="grammar-card" style="border-right-color:var(--blue);">
+    <div class="grammar-label" style="color:var(--blue)">✦ השוואה – שלוש צורות</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;">
+        <thead>
+          <tr>
+            <th style="padding:10px 14px; background:var(--surface2); text-align:right; color:var(--blue);">צורה</th>
+            <th style="padding:10px 14px; background:var(--surface2); text-align:right; color:var(--blue);">מתי משתמשים?</th>
+            <th style="padding:10px 14px; background:var(--surface2); text-align:left; color:var(--blue); direction:ltr;">דוגמה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:9px 14px; border-bottom:1px solid var(--border); color:var(--teal); font-weight:700;">be going to</td>
+            <td style="padding:9px 14px; border-bottom:1px solid var(--border);">תוכניות שהחלטנו עליהן</td>
+            <td style="padding:9px 14px; border-bottom:1px solid var(--border); direction:ltr; text-align:left;">I'm going to study tonight.</td>
+          </tr>
+          <tr style="background:rgba(255,255,255,0.02)">
+            <td style="padding:9px 14px; border-bottom:1px solid var(--border); color:var(--purple); font-weight:700;">Pres. Progressive</td>
+            <td style="padding:9px 14px; border-bottom:1px solid var(--border);">תוכנית מסודרת / קבועה</td>
+            <td style="padding:9px 14px; border-bottom:1px solid var(--border); direction:ltr; text-align:left;">We're leaving tomorrow at 8.</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 14px; color:var(--gold); font-weight:700;">will</td>
+            <td style="padding:9px 14px;">תחזית, הבטחה, עובדה</td>
+            <td style="padding:9px 14px; direction:ltr; text-align:left;">It will rain tomorrow.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VOCAB -->
+  <div class="sec-header" style="margin-top:28px;">
+    <div class="sec-num" style="background:linear-gradient(135deg,var(--gold),#e07800);">📝</div>
+    <div class="sec-title">מילים חשובות ביחידה</div>
+  </div>
+  <div class="vocab-grid">
+    <div class="vocab-item"><div class="vocab-en">plans</div><div class="vocab-he">תוכניות</div></div>
+    <div class="vocab-item"><div class="vocab-en">is driving us</div><div class="vocab-he">מסיע אותנו</div></div>
+    <div class="vocab-item"><div class="vocab-en">Come along!</div><div class="vocab-he">!הצטרפי</div></div>
+    <div class="vocab-item"><div class="vocab-en">We'll pick you up</div><div class="vocab-he">נאסוף אותך</div></div>
+    <div class="vocab-item"><div class="vocab-en">editor</div><div class="vocab-he">עורכת</div></div>
+    <div class="vocab-item"><div class="vocab-en">famous</div><div class="vocab-he">מפורסם</div></div>
+    <div class="vocab-item"><div class="vocab-en">ready</div><div class="vocab-he">מוכנה / מוכן</div></div>
+    <div class="vocab-item"><div class="vocab-en">parking lot</div><div class="vocab-he">מגרש חניה</div></div>
+    <div class="vocab-item"><div class="vocab-en">get ready</div><div class="vocab-he">להתכונן</div></div>
+    <div class="vocab-item"><div class="vocab-en">own</div><div class="vocab-he">יש בבעלותו</div></div>
+    <div class="vocab-item"><div class="vocab-en">won't = will not</div><div class="vocab-he">לא יהיה / לא יעשה</div></div>
+    <div class="vocab-item"><div class="vocab-en">volunteer work</div><div class="vocab-he">עבודת התנדבות</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     TAB: ALICE (WB pp.66–67)
+════════════════════════════════════ -->
+<div class="tab-panel" id="panel-alice">
+  <div class="tab-reset-bar">
+    <button class="btn btn-reset" onclick="resetTab('alice')">🔄 איפוס טאב זה בלבד</button>
+  </div>
+
+  <!-- CONTEXT BOX -->
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;">
+    <div style="font-size:12px;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">📋 הקשר</div>
+    <div style="font-size:13.5px;color:var(--text);margin-bottom:4px;direction:ltr;text-align:left;">It is <strong>April 10, 2018</strong>. Alice (17) is very busy. She has received 6 text messages. Read them carefully, then answer the questions below.</div>
+    <div style="font-size:13px;color:var(--text-muted);">זה ה-10 באפריל 2018. אליס בת 17 ויש לה יום עמוס מאוד. היא קיבלה 6 הודעות. קרא/י אותן בעיון ואז ענה/י על השאלות.</div>
+  </div>
+
+  <!-- WHATSAPP MESSAGES -->
+  <div class="sec-header">
+    <div class="sec-num">📱</div>
+    <div class="sec-title">הודעות ה-WhatsApp של Alice</div>
+    <span class="sec-ref">ספר עמ' 82–83</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div style="background:#075e54;border-radius:12px;overflow:hidden;">
+      <div style="background:#054c44;padding:8px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">👩</div>
+        <span style="font-weight:700;color:#fff;font-size:13px;">① Lucy <span style="font-size:10px;font-weight:400;opacity:.7;">online</span></span>
+      </div>
+      <div style="padding:10px 14px 12px;"><div style="background:#dcf8c6;border-radius:8px;padding:10px 12px;color:#000;font-size:13px;line-height:1.55;direction:ltr;text-align:left;">I am writing a new song and I want you to sing it. Can you come to my house at 4 o'clock?</div></div>
+    </div>
+    <div style="background:#075e54;border-radius:12px;overflow:hidden;">
+      <div style="background:#054c44;padding:8px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">👩</div>
+        <span style="font-weight:700;color:#fff;font-size:13px;">② Brenda <span style="font-size:10px;font-weight:400;opacity:.7;">online</span></span>
+      </div>
+      <div style="padding:10px 14px 12px;"><div style="background:#dcf8c6;border-radius:8px;padding:10px 12px;color:#000;font-size:13px;line-height:1.55;direction:ltr;text-align:left;">Linda, Betty and I are going to a concert at Green Park tonight. My cousin Mark is driving us there. (He is taking his father's car.) Come along! We'll pick you up at 9:30.</div></div>
+    </div>
+    <div style="background:#075e54;border-radius:12px;overflow:hidden;">
+      <div style="background:#054c44;padding:8px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">👨</div>
+        <span style="font-weight:700;color:#fff;font-size:13px;">③ Ed Lane <span style="font-size:10px;font-weight:400;opacity:.7;">online</span></span>
+      </div>
+      <div style="padding:10px 14px 12px;"><div style="background:#dcf8c6;border-radius:8px;padding:10px 12px;color:#000;font-size:13px;line-height:1.55;direction:ltr;text-align:left;">I'm sorry but I can't give you a guitar lesson at 6 o'clock. Can you come at 5 o'clock?</div></div>
+    </div>
+    <div style="background:#075e54;border-radius:12px;overflow:hidden;">
+      <div style="background:#054c44;padding:8px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">👩</div>
+        <span style="font-weight:700;color:#fff;font-size:13px;">④ Editor Vera <span style="font-size:10px;font-weight:400;opacity:.7;">online</span></span>
+      </div>
+      <div style="padding:10px 14px 12px;"><div style="background:#dcf8c6;border-radius:8px;padding:10px 12px;color:#000;font-size:13px;line-height:1.55;direction:ltr;text-align:left;">The story you wrote is very funny. I am sending it to the school online magazine tomorrow. You'll be a famous writer one day.</div></div>
+    </div>
+    <div style="background:#075e54;border-radius:12px;overflow:hidden;">
+      <div style="background:#054c44;padding:8px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">👩</div>
+        <span style="font-weight:700;color:#fff;font-size:13px;">⑤ Lynn <span style="font-size:10px;font-weight:400;opacity:.7;">online</span></span>
+      </div>
+      <div style="padding:10px 14px 12px;"><div style="background:#dcf8c6;border-radius:8px;padding:10px 12px;color:#000;font-size:13px;line-height:1.55;direction:ltr;text-align:left;">Can we meet at the mall at around 6 o'clock? I want you to help me choose a present for my dad's birthday.</div></div>
+    </div>
+    <div style="background:#075e54;border-radius:12px;overflow:hidden;">
+      <div style="background:#054c44;padding:8px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">👩</div>
+        <span style="font-weight:700;color:#fff;font-size:13px;">⑥ Mom <span style="font-size:10px;font-weight:400;opacity:.7;">online</span></span>
+      </div>
+      <div style="padding:10px 14px 12px;"><div style="background:#dcf8c6;border-radius:8px;padding:10px 12px;color:#000;font-size:13px;line-height:1.55;direction:ltr;text-align:left;">Just to remind you: You are babysitting Bobby from 7:00 to 9:00 this evening.</div></div>
+    </div>
+  </div>
+
+  <!-- VOCAB -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:22px;">
+    <div style="font-size:11px;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">📝 מילים חדשות</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;direction:ltr;">
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>plans</strong> = תוכניות</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>is driving us</strong> = מסיע אותנו</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>Come along!</strong> = !הצטרפי</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>pick you up</strong> = נאסוף אותך</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>editor</strong> = עורכת</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>famous</strong> = מפורסם/ת</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>own</strong> = יש בבעלותו</span>
+      <span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;"><strong>babysitting</strong> = שמירה על ילד</span>
+    </div>
+  </div>
+
+  <!-- Q1-4 -->
+  <div class="sec-header">
+    <div class="sec-num">B</div>
+    <div class="sec-title">סרוק את הודעות ה-WhatsApp וענה על השאלות</div>
+    <span class="sec-ref">חוברת עמ' 66</span>
+  </div>
+  <div class="ex-instr">סרוק את הודעות ה-WhatsApp של Alice וענה על השאלות. מלא את החסר במשפטים.</div>
+
+  <!-- Q1 -->
+  <div class="ex-card" id="ex-alice-1">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">1. What is Alice going to do at Lucy's house?</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      She is going to (1) <input class="fill-input small" id="a1-1" placeholder="verb"> Lucy's new (2) <input class="fill-input small" id="a1-2" placeholder="noun">.
+    </div>
+    <div class="attempt-dots" id="dots-alice-1"><div class="dot" id="d-alice-1-1"></div><div class="dot" id="d-alice-1-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-1"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice1()" id="btn-alice-1">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="ex-card" id="ex-alice-2">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">2. Who is Mark?</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      Mark is <input class="fill-input" id="a2-1" placeholder="name">'s <input class="fill-input" id="a2-2" placeholder="relation">.
+    </div>
+    <div class="attempt-dots" id="dots-alice-2"><div class="dot" id="d-alice-2-1"></div><div class="dot" id="d-alice-2-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-2"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice2()" id="btn-alice-2">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Q3 radio -->
+  <div class="ex-card" id="ex-alice-3">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">3. Does Mark own a car?</div>
+    <div class="radio-group" id="rg-alice-3">
+      <label class="radio-opt"><input type="radio" name="rq3" value="yes"> Yes, he does.</label>
+      <label class="radio-opt"><input type="radio" name="rq3" value="no"> No, he doesn't.</label>
+    </div>
+    <div style="margin-top:10px; font-size:14px; direction:ltr; text-align:left;">
+      How do you know? <input class="fill-input large" id="a3-explain" placeholder="because...">
+    </div>
+    <div class="attempt-dots" id="dots-alice-3"><div class="dot" id="d-alice-3-1"></div><div class="dot" id="d-alice-3-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-3"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice3()" id="btn-alice-3">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="ex-card" id="ex-alice-4">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">4. Who is Mr. Lane?</div>
+    <div style="direction:ltr; text-align:left; font-size:14px;">
+      Mr. Lane is Alice's <input class="fill-input" id="a4" placeholder="answer">.
+    </div>
+    <div class="attempt-dots" id="dots-alice-4"><div class="dot" id="d-alice-4-1"></div><div class="dot" id="d-alice-4-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-4"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice4()" id="btn-alice-4">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Q5-7 -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">B</div>
+    <div class="sec-title">המשך השאלות</div>
+    <span class="sec-ref">חוברת עמ' 67</span>
+  </div>
+
+  <!-- Q5 -->
+  <div class="ex-card" id="ex-alice-5">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">5. Vera is the editor of the...</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      Vera is the editor of the (1) <input class="fill-input small" id="a5-1" placeholder="adj"> (2) <input class="fill-input small" id="a5-2" placeholder="adj"> (3) <input class="fill-input" id="a5-3" placeholder="noun">.
+    </div>
+    <div class="attempt-dots" id="dots-alice-5"><div class="dot" id="d-alice-5-1"></div><div class="dot" id="d-alice-5-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-5"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice5()" id="btn-alice-5">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="ex-card" id="ex-alice-6">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">6. Why does Lynn need Alice?</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      Because she wants Alice to (1) <input class="fill-input small" id="a6-1" placeholder="v"> her (2) <input class="fill-input small" id="a6-2" placeholder="v"> a (3) <input class="fill-input small" id="a6-3" placeholder="n"> for her father's (4) <input class="fill-input small" id="a6-4" placeholder="n">.
+    </div>
+    <div class="attempt-dots" id="dots-alice-6"><div class="dot" id="d-alice-6-1"></div><div class="dot" id="d-alice-6-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-6"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice6()" id="btn-alice-6">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="ex-card" id="ex-alice-7">
+    <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--text-muted);">7. Bobby is...</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      Bobby is the (1) <input class="fill-input small" id="a7-1" placeholder="n"> that Alice is (2) <input class="fill-input" id="a7-2" placeholder="v+ing"> this evening.
+    </div>
+    <div class="attempt-dots" id="dots-alice-7"><div class="dot" id="d-alice-7-1"></div><div class="dot" id="d-alice-7-2"></div></div>
+    <div class="feedback-msg" id="fb-alice-7"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkAlice7()" id="btn-alice-7">בדיקה ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     TAB: WANT TO (WB p.67)
+════════════════════════════════════ -->
+<div class="tab-panel" id="panel-wantto">
+  <div class="tab-reset-bar">
+    <button class="btn btn-reset" onclick="resetTab('wantto')">🔄 איפוס טאב זה בלבד</button>
+  </div>
+
+  <div class="sec-header">
+    <div class="sec-num">A</div>
+    <div class="sec-title">השלם עם Phrase Bank</div>
+    <span class="sec-ref">חוברת עמ' 67</span>
+  </div>
+
+  <div class="grammar-card" style="margin-bottom:16px;">
+    <div class="grammar-label">מבנה: want (someone) to + verb 1</div>
+    <div class="grammar-rule">I <strong>want you to</strong> sing. | She <strong>doesn't want us to</strong> talk.</div>
+  </div>
+
+  <div class="phrase-bank">
+    <div class="phrase-bank-title">🗂 Phrase Bank</div>
+    <ul>
+      <li>wants Alice to ✓</li>
+      <li>didn't want Ella to</li>
+      <li>don't want their children to</li>
+      <li>doesn't want us to</li>
+    </ul>
+  </div>
+
+  <div class="ex-instr">השלם את המשפטים בעזרת ה-Phrase Bank. שים לב לסימן ✓ – כבר שימש כדוגמה.</div>
+
+  <div class="ex-card" id="ex-wt-a">
+    <div class="sentence-row"><span class="sent-num">1.</span> Lucy <em>wants Alice to</em> sing her new song. (נתון ✓)</div>
+    <div class="sentence-row"><span class="sent-num">2.</span> The teacher <select class="fill-select" id="wt2"> <option value="">— בחר —</option><option>wants Alice to</option><option>doesn't want us to</option><option>don't want their children to</option><option>didn't want Ella to</option></select> talk during the test.</div>
+    <div class="sentence-row"><span class="sent-num">3.</span> Parents <select class="fill-select" id="wt3"> <option value="">— בחר —</option><option>wants Alice to</option><option>doesn't want us to</option><option>don't want their children to</option><option>didn't want Ella to</option></select> come home late.</div>
+    <div class="sentence-row"><span class="sent-num">4.</span> Karen <select class="fill-select" id="wt4"> <option value="">— בחר —</option><option>wants Alice to</option><option>doesn't want us to</option><option>don't want their children to</option><option>didn't want Ella to</option></select> touch her things.</div>
+    <div class="attempt-dots" id="dots-wt-a"><div class="dot" id="d-wt-a-1"></div><div class="dot" id="d-wt-a-2"></div></div>
+    <div class="feedback-msg" id="fb-wt-a"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkWantA()" id="btn-wt-a">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- WB p.67 B -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">B</div>
+    <div class="sec-title">הפוך פקודות ל"want...to" ⭐</div>
+    <span class="sec-ref">חוברת עמ' 67</span>
+  </div>
+  <div class="ex-instr">קרא את הפקודות והבקשות והפכם למשפטים עם "want ... to".</div>
+
+  <div class="ex-card" id="ex-wt-b">
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px; direction:ltr; text-align:left;">Example: Mother: Wendy, please turn on the light.<br><em style="color:var(--teal);">Mother wants Wendy to turn on the light.</em></div>
+
+    <div style="font-size:13.5px; direction:ltr; margin-bottom:8px;"><strong>2.</strong> Donna: Meg, look at that colorful bird!</div>
+    <textarea class="free-textarea" id="wtb2" placeholder="Donna wants Meg to..."></textarea>
+
+    <div style="font-size:13.5px; direction:ltr; margin-top:12px; margin-bottom:8px;"><strong>3.</strong> Mandy: Brenda, can you wait for me, please?</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      <input class="fill-input large" id="wtb3" placeholder="Mandy wants..."> her.
+    </div>
+
+    <div style="font-size:13.5px; direction:ltr; margin-top:12px; margin-bottom:8px;"><strong>4.</strong> Sam: Mom, please drive me to Fred's house.</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; display:flex; gap:6px; flex-wrap:wrap; align-items:baseline;">
+      <input class="fill-input" id="wtb4a" placeholder="Sam wants..."> him <input class="fill-input" id="wtb4b" placeholder="to drive...">.
+    </div>
+
+    <div class="attempt-dots" id="dots-wt-b"><div class="dot" id="d-wt-b-1"></div><div class="dot" id="d-wt-b-2"></div></div>
+    <div class="feedback-msg" id="fb-wt-b"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkWantB()" id="btn-wt-b">בדיקה ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     TAB: BE GOING TO (WB pp.68–69)
+════════════════════════════════════ -->
+<div class="tab-panel" id="panel-goingto">
+  <div class="tab-reset-bar">
+    <button class="btn btn-reset" onclick="resetTab('goingto')">🔄 איפוס טאב זה בלבד</button>
+  </div>
+
+  <!-- Dialogue 1: TREES -->
+  <div class="sec-header">
+    <div class="sec-num">A</div>
+    <div class="sec-title">השלם את הדיאלוגים – "be going to"</div>
+    <span class="sec-ref">חוברת עמ' 68</span>
+  </div>
+  <div class="ex-instr">השלם את הדיאלוגים הבאים באמצעות צורת ה-"be going to" הנכונה.</div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <span>כדי לשאול: Are + [subject] + going to + verb? | לשלול: [subject] + am/is/are + not + going to + verb</span>
+  </div>
+
+  <div class="dialogue-box" id="ex-gt-1">
+    <div style="font-size:13px; font-weight:800; color:var(--gold); margin-bottom:10px; letter-spacing:1px;">TREES</div>
+    <div class="dialogue-line"><span class="speaker">Dad:</span> We <strong style="color:var(--teal)">are going to plant</strong> two trees in the garden next week.</div>
+    <div class="dialogue-line"><span class="speaker">Donna:</span> (1) <select class="fill-select" id="gt1-1"><option value="">—</option><option>Are</option><option>Is</option><option>Do</option></select> we <input class="fill-input small" id="gt1-2" placeholder="going to…"> flowers, too?</div>
+    <div class="dialogue-line"><span class="speaker">Dad:</span> No, we (2) <select class="fill-select" id="gt1-3"><option value="">—</option><option>aren't</option><option>don't</option><option>isn't</option></select>. We (3) <input class="fill-input" id="gt1-4" placeholder="are not going to…"> plant flowers next week. We'll plant flowers next month.</div>
+    <div class="dialogue-line"><span class="speaker">Donna:</span> What trees (4) <input class="fill-input" id="gt1-5" placeholder="are you going to…">?</div>
+    <div class="dialogue-line"><span class="speaker">Dad:</span> We (5) <input class="fill-input large" id="gt1-6" placeholder="are going to plant…"> an orange tree and a lemon tree.</div>
+    <div class="attempt-dots" id="dots-gt-1"><div class="dot" id="d-gt-1-1"></div><div class="dot" id="d-gt-1-2"></div></div>
+    <div class="feedback-msg" id="fb-gt-1"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkGT1()" id="btn-gt-1">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Dialogue 2: AUNT BELLA -->
+  <div class="dialogue-box" style="margin-top:16px;" id="ex-gt-2">
+    <div style="font-size:13px; font-weight:800; color:var(--gold); margin-bottom:10px; letter-spacing:1px;">AUNT BELLA'S MEAL</div>
+    <div class="dialogue-line"><span class="speaker">Dave:</span> Aunt Bella <strong style="color:var(--teal)">is going to cook</strong> a meal for all of us next Friday.</div>
+    <div class="dialogue-line"><span class="speaker">Sam:</span> (1) <select class="fill-select" id="gt2-1"><option value="">—</option><option>Is</option><option>Are</option><option>Does</option></select> she <input class="fill-input small" id="gt2-2" placeholder="going to…"> vegetable soup again?</div>
+    <div class="dialogue-line"><span class="speaker">Dave:</span> No, she (2) <select class="fill-select" id="gt2-3"><option value="">—</option><option>isn't</option><option>aren't</option><option>doesn't</option></select>. She (3) <input class="fill-input large" id="gt2-4" placeholder="is not going to cook…"> vegetable soup. She (4) <input class="fill-input large" id="gt2-5" placeholder="is going to cook…"> onion soup.</div>
+    <div class="dialogue-line"><span class="speaker">Sam:</span> What else (5) <input class="fill-input large" id="gt2-6" placeholder="is she going to cook…">?</div>
+    <div class="dialogue-line"><span class="speaker">Dave:</span> I don't know. Aunt Bella's food isn't tasty. Why doesn't she take a cooking course?</div>
+    <div class="attempt-dots" id="dots-gt-2"><div class="dot" id="d-gt-2-1"></div><div class="dot" id="d-gt-2-2"></div></div>
+    <div class="feedback-msg" id="fb-gt-2"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkGT2()" id="btn-gt-2">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- My plans (WB p.68 A) -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">✍️</div>
+    <div class="sec-title">כתוב שני דברים שאתה/את הולך/ת לעשות הערב</div>
+    <span class="sec-ref">ספר עמ' 83</span>
+  </div>
+  <div class="ex-card" id="ex-gt-3">
+    <div class="ex-instr">כתב שני משפטים חיוביים ושניים שליליים על הערב שלך.</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; margin-bottom:8px;">1. I <strong>am going to</strong> <input class="fill-input large" id="gt3-1" placeholder="verb + more"> this evening.</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; margin-bottom:8px;">2. I <strong>am going to</strong> <input class="fill-input large" id="gt3-2" placeholder="verb + more"> this evening.</div>
+    <div style="direction:ltr; text-align:left; font-size:14px; margin-bottom:8px;">3. I <strong>am not going to</strong> <input class="fill-input large" id="gt3-3" placeholder="verb + more"> this evening.</div>
+    <div style="direction:ltr; text-align:left; font-size:14px;">4. I <strong>am not going to</strong> <input class="fill-input large" id="gt3-4" placeholder="verb + more"> this evening.</div>
+    <div style="font-size:12px; color:var(--text-muted); margin-top:10px;">✨ תשובה אישית – נשמרת אוטומטית, אין ציון.</div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="savePersonal('gt3')" id="btn-gt-3" style="background:var(--surface2); border:1.5px solid var(--teal); color:var(--teal);">💾 שמור</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     TAB: PRESENT PROGRESSIVE (WB p.69)
+════════════════════════════════════ -->
+<div class="tab-panel" id="panel-progfut">
+  <div class="tab-reset-bar">
+    <button class="btn btn-reset" onclick="resetTab('progfut')">🔄 איפוס טאב זה בלבד</button>
+  </div>
+
+  <div class="sec-header">
+    <div class="sec-num">B</div>
+    <div class="sec-title">הוסף ing לפעלים הבאים</div>
+    <span class="sec-ref">חוברת עמ' 69</span>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <div>
+      <strong>כללי איות (Spelling Rules):</strong><br>
+      • רוב הפעלים: פשוט + ing (send → sending)<br>
+      • פועל מסתיים ב-e: מוחקים e ומוסיפים ing (come → coming)<br>
+      • פועל קצר + עיצור אחד בסוף: מכפילים עיצור (stop → stopping, get → getting)<br>
+      • פועל מסתיים ב-ie: מחליפים ל-y + ing (die → dying)
+    </div>
+  </div>
+
+  <div class="ex-card" id="ex-pf-1">
+    <div class="ex-instr">הוסף ing לפעלים הבאים. שים לב לכללי האיות!</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+      <div class="sentence-row"><span class="sent-num">a.</span> send → <em style="color:var(--teal)">sending</em> (נתון)</div>
+      <div class="sentence-row"><span class="sent-num">f.</span> leave → <input class="fill-input small" id="pf1-f" placeholder="leaving?"></div>
+      <div class="sentence-row"><span class="sent-num">b.</span> come → <input class="fill-input small" id="pf1-b" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">g.</span> cry → <input class="fill-input small" id="pf1-g" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">c.</span> stop → <input class="fill-input small" id="pf1-c" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">h.</span> sit → <input class="fill-input small" id="pf1-h" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">d.</span> study → <input class="fill-input small" id="pf1-d" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">i.</span> meet → <input class="fill-input small" id="pf1-i" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">e.</span> get → <input class="fill-input small" id="pf1-e" placeholder="-ing"></div>
+      <div class="sentence-row"><span class="sent-num">j.</span> open → <input class="fill-input small" id="pf1-j" placeholder="-ing"></div>
+    </div>
+    <div class="attempt-dots" id="dots-pf-1"><div class="dot" id="d-pf-1-1"></div><div class="dot" id="d-pf-1-2"></div></div>
+    <div class="feedback-msg" id="fb-pf-1"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkPF1()" id="btn-pf-1">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Complete sentences -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">B</div>
+    <div class="sec-title">השלם משפטים – am / is / are + verb + ing</div>
+    <span class="sec-ref">חוברת עמ' 69</span>
+  </div>
+  <div class="ex-card" id="ex-pf-2">
+    <div class="ex-instr">השלם את המשפטים. השתמש ב-am / is / are + verb + ing.</div>
+    <div class="sentence-row"><span class="sent-num">a.</span> The girls <em style="color:var(--teal)">are getting ready</em> (get ready) for the concert. (נתון)</div>
+    <div class="sentence-row"><span class="sent-num">b.</span> Brenda <input class="fill-input" id="pf2-b" placeholder="is/are + wash+ing"> (wash) her hair.</div>
+    <div class="sentence-row"><span class="sent-num">c.</span> Betty <input class="fill-input" id="pf2-c" placeholder="is + take+ing"> (take) a shower.</div>
+    <div class="sentence-row"><span class="sent-num">d.</span> Linda <input class="fill-input" id="pf2-d" placeholder="is + put on+ing"> (put on) her new dress.</div>
+    <div class="sentence-row"><span class="sent-num">e.</span> (Some time later) Brenda and Mark <input class="fill-input" id="pf2-e" placeholder="are + leave+ing"> (leave) for Green Park.</div>
+    <div class="attempt-dots" id="dots-pf-2"><div class="dot" id="d-pf-2-1"></div><div class="dot" id="d-pf-2-2"></div></div>
+    <div class="feedback-msg" id="fb-pf-2"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkPF2()" id="btn-pf-2">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Dialogues: Plans for tomorrow / weekend -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">C</div>
+    <div class="sec-title">השלם דיאלוגים – Present Progressive לעתיד</div>
+    <span class="sec-ref">חוברת עמ' 69</span>
+  </div>
+
+  <div class="dialogue-box" id="ex-pf-3a">
+    <div style="font-size:13px; font-weight:800; color:var(--gold); margin-bottom:10px;">PLANS FOR TOMORROW</div>
+    <div class="dialogue-line"><span class="speaker">Linda:</span> Lee and I (1) <input class="fill-input" id="pf3a-1" placeholder="are going"> (go) to the circus tomorrow. Do you want to come with us?</div>
+    <div class="dialogue-line"><span class="speaker">Betty:</span> I can't. I (2) <input class="fill-input" id="pf3a-2" placeholder="am starting"> (start) an afternoon job tomorrow.</div>
+    <div class="dialogue-line"><span class="speaker">Linda:</span> I see. Good luck!</div>
+    <div class="attempt-dots" id="dots-pf-3a"><div class="dot" id="d-pf-3a-1"></div><div class="dot" id="d-pf-3a-2"></div></div>
+    <div class="feedback-msg" id="fb-pf-3a"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkPF3a()" id="btn-pf-3a">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <div class="dialogue-box" style="margin-top:14px;" id="ex-pf-3b">
+    <div style="font-size:13px; font-weight:800; color:var(--gold); margin-bottom:10px;">PLANS FOR THE WEEKEND</div>
+    <div class="dialogue-line"><span class="speaker">Derek:</span> I (1) <input class="fill-input" id="pf3b-1" placeholder="am having"> (have) a party at my house on Thursday night. All our friends (2) <input class="fill-input" id="pf3b-2" placeholder="are coming"> (come).</div>
+    <div class="dialogue-line"><span class="speaker">Steve:</span> Sorry, I can't. My aunt and uncle (3) <input class="fill-input" id="pf3b-3" placeholder="are taking"> (take) me to Eilat for the weekend. We (4) <input class="fill-input" id="pf3b-4" placeholder="are leaving"> (leave) tomorrow.</div>
+    <div class="dialogue-line"><span class="speaker">Derek:</span> Well… Enjoy your weekend!</div>
+    <div class="attempt-dots" id="dots-pf-3b"><div class="dot" id="d-pf-3b-1"></div><div class="dot" id="d-pf-3b-2"></div></div>
+    <div class="feedback-msg" id="fb-pf-3b"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkPF3b()" id="btn-pf-3b">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- Now vs Future -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">D</div>
+    <div class="sec-title">עכשיו או עתיד? (ספר עמ' 84)</div>
+    <span class="sec-ref">ספר עמ' 84</span>
+  </div>
+  <div class="ex-card" id="ex-pf-4">
+    <div class="ex-instr">קרא את המשפטים. איזה מהם מספר על דברים שקורים עכשיו ואיזה מספר על העתיד?</div>
+    <div id="nowfut-sentences">
+      <div style="padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; direction:ltr; text-align:left; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>1. It is raining.</span>
+        <div class="radio-group" style="margin-right:auto;">
+          <label class="radio-opt"><input type="radio" name="nf1" value="now"> now</label>
+          <label class="radio-opt"><input type="radio" name="nf1" value="future"> future</label>
+        </div>
+      </div>
+      <div style="padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; direction:ltr; text-align:left; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>2. My uncle is coming back from New York in a few days.</span>
+        <div class="radio-group" style="margin-right:auto;">
+          <label class="radio-opt"><input type="radio" name="nf2" value="now"> now</label>
+          <label class="radio-opt"><input type="radio" name="nf2" value="future"> future</label>
+        </div>
+      </div>
+      <div style="padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; direction:ltr; text-align:left; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>3. Is your family having a game evening tomorrow?</span>
+        <div class="radio-group" style="margin-right:auto;">
+          <label class="radio-opt"><input type="radio" name="nf3" value="now"> now</label>
+          <label class="radio-opt"><input type="radio" name="nf3" value="future"> future</label>
+        </div>
+      </div>
+      <div style="padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; direction:ltr; text-align:left; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>4. Are you studying for the test?</span>
+        <div class="radio-group" style="margin-right:auto;">
+          <label class="radio-opt"><input type="radio" name="nf4" value="now"> now</label>
+          <label class="radio-opt"><input type="radio" name="nf4" value="future"> future</label>
+        </div>
+      </div>
+      <div style="padding:8px 0; font-size:14px; direction:ltr; text-align:left; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span>5. Dad is coming home soon.</span>
+        <div class="radio-group" style="margin-right:auto;">
+          <label class="radio-opt"><input type="radio" name="nf5" value="now"> now</label>
+          <label class="radio-opt"><input type="radio" name="nf5" value="future"> future</label>
+        </div>
+      </div>
+    </div>
+    <div class="attempt-dots" id="dots-pf-4"><div class="dot" id="d-pf-4-1"></div><div class="dot" id="d-pf-4-2"></div></div>
+    <div class="feedback-msg" id="fb-pf-4"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkPF4()" id="btn-pf-4">בדיקה ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     TAB: WILL / WON'T (WB p.70)
+════════════════════════════════════ -->
+<div class="tab-panel" id="panel-will">
+  <div class="tab-reset-bar">
+    <button class="btn btn-reset" onclick="resetTab('will')">🔄 איפוס טאב זה בלבד</button>
+  </div>
+
+  <!-- will grammar reminder -->
+  <div class="grammar-card" style="margin-bottom:16px;">
+    <div class="grammar-label" style="color:var(--gold);">E — The Future "will" | (Short form: 'll)</div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">אנו משתמשים ב-will כדי: <strong style="color:var(--gold)">לציין עובדות</strong> / <strong style="color:var(--gold)">לחזות את העתיד</strong> / <strong style="color:var(--gold)">להביע הבטחה</strong></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+      <div style="background:var(--surface2);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--gold);margin-bottom:5px;">עובדות</div>
+        <div style="font-size:12.5px;direction:ltr;text-align:left;">Today is Sunday. Tomorrow <strong style="color:var(--gold)">will be</strong> Monday.</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--gold);margin-bottom:5px;">תחזית</div>
+        <div style="font-size:12.5px;direction:ltr;text-align:left;">You <strong style="color:var(--gold)">will be</strong> a famous writer one day.</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--gold);margin-bottom:5px;">הבטחה</div>
+        <div style="font-size:12.5px;direction:ltr;text-align:left;">We <strong style="color:var(--gold)">will</strong> / <strong style="color:var(--gold)">'ll pick</strong> you up at 9:30.</div>
+      </div>
+    </div>
+    <div style="background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:13px;direction:ltr;text-align:left;">
+      ✅ I <strong style="color:var(--teal)">will</strong> / <strong style="color:var(--teal)">'ll</strong> be ready. &nbsp;&nbsp;
+      ❌ I <strong style="color:var(--rose)">will not</strong> / <strong style="color:var(--rose)">won't</strong> be late. &nbsp;&nbsp;
+      ❓ <strong style="color:var(--gold)">Will</strong> you wait? → Yes, I <strong style="color:var(--teal)">will</strong>. / No, I <strong style="color:var(--rose)">won't</strong>.
+    </div>
+  </div>
+
+  <!-- Dialogue F -->
+  <div class="sec-header">
+    <div class="sec-num">F</div>
+    <div class="sec-title">קרא את הדיאלוג וענה על השאלות (ספר עמ' 84)</div>
+    <span class="sec-ref">ספר עמ' 84</span>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <span><strong>TIP:</strong> won't = will not</span>
+  </div>
+
+  <div class="dialogue-box">
+    <div class="dialogue-line"><span class="speaker">Brenda:</span> Alice, we're not far from your house.</div>
+    <div class="dialogue-line"><span class="speaker">Alice:</span> Good. I'll be ready in a few minutes.</div>
+    <div class="dialogue-line"><span class="speaker">Brenda:</span> Okay, take your time. We'll wait for you.</div>
+    <div class="dialogue-line"><span class="speaker">Alice:</span> Will you wait near my house?</div>
+    <div class="dialogue-line"><span class="speaker">Brenda:</span> No, we won't. Mark won't find a parking place near your house.</div>
+    <div class="dialogue-line"><span class="speaker">Alice:</span> So where will you wait for me?</div>
+    <div class="dialogue-line"><span class="speaker">Brenda:</span> In the parking lot of the Community Center.</div>
+    <div class="dialogue-line"><span class="speaker">Alice:</span> No problem. I'll be there in ten minutes.</div>
+  </div>
+
+  <div class="ex-card" id="ex-will-f">
+    <div class="ex-instr">ענה על שאלות ההבנה.</div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:14px; font-weight:600; margin-bottom:6px;">1. When will Alice be ready?</div>
+      <input class="fill-input large" id="wf1" placeholder="She will be ready...">
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:14px; font-weight:600; margin-bottom:6px;">2. Why won't Brenda and Mark wait near Alice's house?</div>
+      <input class="fill-input" style="min-width:340px;" id="wf2" placeholder="Because Mark won't...">
+    </div>
+    <div>
+      <div style="font-size:14px; font-weight:600; margin-bottom:6px;">3. Where will they wait?</div>
+      <input class="fill-input large" id="wf3" placeholder="In the...">
+    </div>
+    <div class="attempt-dots" id="dots-will-f"><div class="dot" id="d-will-f-1"></div><div class="dot" id="d-will-f-2"></div></div>
+    <div class="feedback-msg" id="fb-will-f"></div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkWillF()" id="btn-will-f">בדיקה ✓</button>
+    </div>
+  </div>
+
+  <!-- WB p.70 D - 50 years -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">D</div>
+    <div class="sec-title">חיים בעוד 50 שנה – will / won't</div>
+    <span class="sec-ref">חוברת עמ' 70</span>
+  </div>
+  <div class="ex-instr">דמיין איך החיים ייראו בעוד 50 שנה. כתוב משפטים עם will או won't. אין תשובה נכונה/שגויה!</div>
+
+  <div class="ex-card" id="ex-will-50">
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px; direction:ltr; text-align:left;">Example: Students / go / school → <em style="color:var(--teal)">Students will / won't go to school.</em></div>
+    <div class="sentence-row"><span class="sent-num">a.</span>
+      People
+      <select class="fill-select" id="w50-a-ww"><option value="will">will</option><option value="won't">won't</option></select>
+      stay home.
+    </div>
+    <div class="sentence-row"><span class="sent-num">b.</span>
+      People
+      <select class="fill-select" id="w50-b-ww"><option value="will">will</option><option value="won't">won't</option></select>
+      see each other on the Internet.
+    </div>
+    <div class="sentence-row"><span class="sent-num">c.</span>
+      People
+      <select class="fill-select" id="w50-c-ww"><option value="will">will</option><option value="won't">won't</option></select>
+      shop online.
+    </div>
+    <div class="sentence-row"><span class="sent-num">d.</span>
+      Children
+      <select class="fill-select" id="w50-d-ww"><option value="will">will</option><option value="won't">won't</option></select>
+      play outside.
+    </div>
+    <div class="sentence-row"><span class="sent-num">e.</span>
+      People
+      <select class="fill-select" id="w50-e-ww"><option value="will">will</option><option value="won't">won't</option></select>
+      use money.
+    </div>
+    <div style="font-size:12px; color:var(--text-muted); margin-top:10px;">✨ תרגיל דעה – תשובות אישיות, נשמרות אוטומטית.</div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="savePersonal('w50')" style="background:var(--surface2); border:1.5px solid var(--teal); color:var(--teal);">💾 שמור</button>
+    </div>
+  </div>
+
+  <!-- Alice's future + My future -->
+  <div class="sec-header" style="margin-top:24px;">
+    <div class="sec-num">✍️</div>
+    <div class="sec-title">כיצד אתה/את רואה את עתידך?</div>
+    <span class="sec-ref">חוברת עמ' 70</span>
+  </div>
+
+  <div class="grammar-card" style="margin-bottom:14px;">
+    <div class="grammar-label">Alice's Future:</div>
+    <ul style="padding-right:20px; font-size:13.5px; direction:ltr; text-align:left; color:var(--text-muted);">
+      <li>I'll be happy.</li>
+      <li>I'll be a famous writer.</li>
+      <li>My family will be proud of me.</li>
+      <li>I won't buy a big house and an expensive car.</li>
+      <li>I will help people in need.</li>
+      <li>I will do volunteer work.</li>
+    </ul>
+  </div>
+
+  <div class="ex-card">
+    <div class="ex-instr">כתב 3–4 משפטים על עתידך. השתמש ב-will / won't.</div>
+    <textarea class="free-textarea" id="myfuture" placeholder="I will... / I won't... / My family will..." style="min-height:120px;"></textarea>
+    <div style="margin-top:12px; font-size:13.5px; font-weight:600; color:var(--text-muted);">כתוב שתי שאלות על עתידך:</div>
+    <div style="direction:ltr; text-align:left; margin-top:8px;">
+      <input class="fill-input" style="min-width:320px; margin-bottom:8px;" id="myq1" placeholder="Will I... / Where will I...">
+      <br><input class="fill-input" style="min-width:320px;" id="myq2" placeholder="Will I... / When will I...">
+    </div>
+    <div style="font-size:12px; color:var(--text-muted); margin-top:10px;">✨ תרגיל אישי – נשמר אוטומטית.</div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="savePersonal('myfuture')" style="background:var(--surface2); border:1.5px solid var(--teal); color:var(--teal);">💾 שמור</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+// ── STORAGE KEY PREFIX ──
+const STORE = 'u4_ws_';
+
+// ── SCORING ──
+// tracked exercises: id → {points, scored}
+const SCORING = {
+  'alice-1':4, 'alice-2':4, 'alice-3':6, 'alice-4':3,
+  'alice-5':6, 'alice-6':8, 'alice-7':6,
+  'wt-a':6, 'wt-b':6,
+  'gt-1':10, 'gt-2':10,
+  'pf-1':18, 'pf-2':8, 'pf-3a':4, 'pf-3b':8, 'pf-4':10,
+  'will-f':6
+};
+// attempts per exercise
+const ATTEMPTS = {};
+// scored exercises
+const SCORED = {};
+
+// ── TABS ──
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  ls('lastTab', name);
+}
+
+// ── LOCAL STORAGE HELPERS ──
+function ls(key, val) {
+  if (val === undefined) return localStorage.getItem(STORE + key);
+  localStorage.setItem(STORE + key, typeof val === 'object' ? JSON.stringify(val) : val);
+}
+function lsDel(key) { localStorage.removeItem(STORE + key); }
+
+// ── RESTORE ALL SAVED VALUES ──
+function restoreAll() {
+  document.querySelectorAll('input[type=text], input.fill-input, textarea.free-textarea').forEach(el => {
+    if (el.id) { const v = ls('v_' + el.id); if (v !== null) el.value = v; }
+  });
+  document.querySelectorAll('select.fill-select').forEach(el => {
+    if (el.id) { const v = ls('v_' + el.id); if (v !== null) el.value = v; }
+  });
+  document.querySelectorAll('input[type=radio]').forEach(el => {
+    if (el.name) {
+      const v = ls('r_' + el.name);
+      if (v !== null && el.value === v) el.checked = true;
+    }
+  });
+  // restore locked + scored
+  const sc = ls('scored');
+  if (sc) Object.assign(SCORED, JSON.parse(sc));
+  const at = ls('attempts');
+  if (at) Object.assign(ATTEMPTS, JSON.parse(at));
+  // re-apply lock states
+  Object.keys(ATTEMPTS).forEach(id => {
+    if ((ATTEMPTS[id] || 0) >= 2) applyLock(id, true);
+  });
+  updateScoreBar();
+  // restore tab
+  const t = ls('lastTab');
+  if (t) switchTab(t);
+}
+
+// ── AUTO-SAVE on input ──
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (el.matches('input.fill-input, textarea.free-textarea')) {
+    if (el.id) ls('v_' + el.id, el.value);
+  }
+  if (el.matches('select.fill-select')) {
+    if (el.id) ls('v_' + el.id, el.value);
+  }
+});
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el.type === 'radio' && el.name) ls('r_' + el.name, el.value);
+});
+
+// ── ATTEMPT HELPERS ──
+function getAttempts(id) { return ATTEMPTS[id] || 0; }
+function incAttempt(id) {
+  ATTEMPTS[id] = (ATTEMPTS[id] || 0) + 1;
+  ls('attempts', ATTEMPTS);
+}
+function markDot(id, attemptNum, state) {
+  const d = document.getElementById('d-' + id + '-' + attemptNum);
+  if (d) { d.className = 'dot ' + state; }
+}
+function showFeedback(id, type, msg) {
+  const el = document.getElementById('fb-' + id);
+  if (!el) return;
+  el.className = 'feedback-msg show ' + type;
+  el.textContent = msg;
+}
+function applyLock(id, silent) {
+  const card = document.getElementById('ex-' + id);
+  if (!card) return;
+  card.querySelectorAll('.fill-input, .fill-select, .free-textarea').forEach(el => el.classList.add('locked'));
+  card.querySelectorAll('.radio-opt').forEach(el => el.classList.add('locked'));
+  const btn = document.getElementById('btn-' + id);
+  if (btn) btn.disabled = true;
+  if (!silent) markDot(id, 2, 'locked');
+}
+function awardScore(id, correct, total) {
+  if (SCORED[id]) return;
+  const pts = correct >= total ? SCORING[id] : Math.round(SCORING[id] * correct / total);
+  SCORED[id] = pts;
+  ls('scored', SCORED);
+  updateScoreBar();
+  updateTabBadge(id);
+}
+
+// ── SCORE BAR ──
+function updateScoreBar() {
+  const total = Object.values(SCORING).reduce((a, b) => a + b, 0);
+  const earned = Object.values(SCORED).reduce((a, b) => a + b, 0);
+  const pct = total > 0 ? Math.round(earned / total * 100) : 0;
+  document.getElementById('score-fill').style.width = pct + '%';
+  document.getElementById('score-label').textContent = pct + ' / 100';
+  document.getElementById('score-pts').textContent = Object.keys(SCORED).length + ' / ' + Object.keys(SCORING).length + ' תרגילים';
+}
+
+function getTabForExercise(id) {
+  const map = {
+    'alice': ['alice-1','alice-2','alice-3','alice-4','alice-5','alice-6','alice-7'],
+    'wantto': ['wt-a','wt-b'],
+    'goingto': ['gt-1','gt-2'],
+    'progfut': ['pf-1','pf-2','pf-3a','pf-3b','pf-4'],
+    'will': ['will-f']
+  };
+  for (const [tab, ids] of Object.entries(map)) {
+    if (ids.includes(id)) return tab;
+  }
+  return null;
+}
+
+function updateTabBadge(id) {
+  const tab = getTabForExercise(id);
+  if (!tab) return;
+  const tabIds = {
+    'alice': ['alice-1','alice-2','alice-3','alice-4','alice-5','alice-6','alice-7'],
+    'wantto': ['wt-a','wt-b'],
+    'goingto': ['gt-1','gt-2'],
+    'progfut': ['pf-1','pf-2','pf-3a','pf-3b','pf-4'],
+    'will': ['will-f']
+  }[tab];
+  const pts = tabIds.reduce((sum, i) => sum + (SCORED[i] || 0), 0);
+  const el = document.getElementById('badge-' + tab);
+  if (el) el.textContent = pts;
+}
+
+// ── NORMALIZE ──
+function norm(s) { return (s || '').trim().toLowerCase().replace(/['']/g, "'"); }
+function match(input, ...options) { const v = norm(input.value || input); return options.some(o => norm(o) === v || v.includes(norm(o))); }
+
+// ── CHECK FUNCTIONS ──
+
+// ALICE 1
+function checkAlice1() {
+  const id = 'alice-1';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = match(document.getElementById('a1-1'), 'sing');
+  const ok2 = match(document.getElementById('a1-2'), 'song');
+  const correct = (ok1 ? 1 : 0) + (ok2 ? 1 : 0);
+  incAttempt(id);
+  const att = getAttempts(id);
+  if (ok1 && ok2) {
+    markDot(id, att, 'correct');
+    showFeedback(id, 'ok', '✅ מצוין! sing her new song.');
+    awardScore(id, 2, 2);
+    applyLock(id);
+  } else {
+    markDot(id, att, 'wrong');
+    if (att >= 2) {
+      showFeedback(id, 'answer', '📖 התשובה: (1) sing (2) song');
+      awardScore(id, correct, 2);
+      applyLock(id);
+    } else showFeedback(id, 'bad', '❌ נסה שוב! חזור להודעה מ-Lucy.');
+  }
+}
+
+// ALICE 2
+function checkAlice2() {
+  const id = 'alice-2';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = match(document.getElementById('a2-1'), 'brenda');
+  const ok2 = match(document.getElementById('a2-2'), 'cousin');
+  const correct = (ok1?1:0)+(ok2?1:0);
+  incAttempt(id);
+  const att = getAttempts(id);
+  if (ok1 && ok2) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ נכון! Mark is Brenda\'s cousin.'); awardScore(id,2,2); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 Brenda\'s cousin'); awardScore(id,correct,2); applyLock(id); }
+    else showFeedback(id,'bad','❌ נסה שוב! חפש מי שולח/ת להודעה 2.');
+  }
+}
+
+// ALICE 3
+function checkAlice3() {
+  const id = 'alice-3';
+  if (getAttempts(id) >= 2) return;
+  const radio = document.querySelector('input[name="rq3"]:checked');
+  const okRadio = radio && radio.value === 'no';
+  const explain = document.getElementById('a3-explain').value;
+  const okEx = explain.toLowerCase().includes('father') || explain.toLowerCase().includes('his father');
+  const correct = (okRadio?3:0)+(okEx?3:0);
+  incAttempt(id);
+  const att = getAttempts(id);
+  if (okRadio && okEx) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ נכון! No. "He is taking his father\'s car."'); awardScore(id,6,6); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 No, he doesn\'t. He is taking his FATHER\'s car – it belongs to his dad.'); awardScore(id,correct,6); applyLock(id); }
+    else showFeedback(id,'bad','❌ נסה שוב! שים לב לפרט הקטן באמצע הודעה 2.');
+  }
+}
+
+// ALICE 4
+function checkAlice4() {
+  const id = 'alice-4';
+  if (getAttempts(id) >= 2) return;
+  const ok = match(document.getElementById('a4'), 'guitar teacher', 'guitar lesson teacher');
+  incAttempt(id); const att = getAttempts(id);
+  if (ok) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ נכון! guitar teacher'); awardScore(id,1,1); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 guitar teacher'); awardScore(id,0,1); applyLock(id); }
+    else showFeedback(id,'bad','❌ חפש בהודעה 3 מה Ed Lane עושה.');
+  }
+}
+
+// ALICE 5
+function checkAlice5() {
+  const id = 'alice-5';
+  if (getAttempts(id) >= 2) return;
+  const ok1=match(document.getElementById('a5-1'),'school');
+  const ok2=match(document.getElementById('a5-2'),'online');
+  const ok3=match(document.getElementById('a5-3'),'magazine');
+  const correct=(ok1?2:0)+(ok2?2:0)+(ok3?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2&&ok3) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ school online magazine'); awardScore(id,6,6); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 (1) school (2) online (3) magazine'); awardScore(id,correct,6); applyLock(id); }
+    else showFeedback(id,'bad','❌ חפש בהודעה 4 (Vera). מה סוג המגזין?');
+  }
+}
+
+// ALICE 6
+function checkAlice6() {
+  const id = 'alice-6';
+  if (getAttempts(id) >= 2) return;
+  const ok1=match(document.getElementById('a6-1'),'help');
+  const ok2=match(document.getElementById('a6-2'),'choose');
+  const ok3=match(document.getElementById('a6-3'),'present','gift');
+  const ok4=match(document.getElementById('a6-4'),'birthday');
+  const correct=(ok1?2:0)+(ok2?2:0)+(ok3?2:0)+(ok4?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2&&ok3&&ok4) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ help / choose / present / birthday'); awardScore(id,8,8); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 (1) help (2) choose (3) present (4) birthday'); awardScore(id,correct,8); applyLock(id); }
+    else showFeedback(id,'bad','❌ קרא שוב את הודעה 5 (Lynn).');
+  }
+}
+
+// ALICE 7
+function checkAlice7() {
+  const id = 'alice-7';
+  if (getAttempts(id) >= 2) return;
+  const ok1=match(document.getElementById('a7-1'),'child','baby','kid');
+  const ok2=match(document.getElementById('a7-2'),'babysitting');
+  const correct=(ok1?3:0)+(ok2?3:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ the child / babysitting'); awardScore(id,6,6); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 (1) child (2) babysitting'); awardScore(id,correct,6); applyLock(id); }
+    else showFeedback(id,'bad','❌ הודעה 6 (Mom) – מה Alice עושה הערב?');
+  }
+}
+
+// WANT A
+function checkWantA() {
+  const id = 'wt-a';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = document.getElementById('wt2').value === "doesn't want us to";
+  const ok2 = document.getElementById('wt3').value === "don't want their children to";
+  const ok3 = document.getElementById('wt4').value === "didn't want Ella to";
+  const correct = (ok1?2:0)+(ok2?2:0)+(ok3?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2&&ok3) {
+    markDot(id,att,'correct'); showFeedback(id,'ok',"✅ מצוין!"); awardScore(id,6,6); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer',"📖 2. doesn't want us to | 3. don't want their children to | 4. didn't want Ella to"); awardScore(id,correct,6); applyLock(id); }
+    else showFeedback(id,'bad','❌ שים לב לנושא של כל משפט ולזמן (עבר/הווה).');
+  }
+}
+
+// WANT B
+function checkWantB() {
+  const id = 'wt-b';
+  if (getAttempts(id) >= 2) return;
+  const v3 = norm(document.getElementById('wtb3').value);
+  const v4a = norm(document.getElementById('wtb4a').value);
+  const ok3 = v3.includes('mandy') && v3.includes('brenda') && v3.includes('wait');
+  const ok4 = v4a.includes('sam') && v4a.includes('mom') || v4a.includes('mother');
+  const correct = (ok3?3:0)+(ok4?3:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok3&&ok4) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,6,6); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 3. Mandy wants Brenda to wait for her. | 4. Sam wants his mom to drive him to Fred\'s house.'); awardScore(id,correct,6); applyLock(id); }
+    else showFeedback(id,'bad','❌ שים לב: מי רוצה? ממי? מה לעשות?');
+  }
+}
+
+// GT1 - TREES
+function checkGT1() {
+  const id = 'gt-1';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = document.getElementById('gt1-1').value === 'Are';
+  const ok2 = norm(document.getElementById('gt1-2').value).startsWith('going to');
+  const ok3 = document.getElementById('gt1-3').value === 'aren\'t';
+  const ok4 = norm(document.getElementById('gt1-4').value).includes('are not going to') || norm(document.getElementById('gt1-4').value).includes("aren't going to");
+  const ok5 = norm(document.getElementById('gt1-5').value).includes('are you going to');
+  const ok6 = norm(document.getElementById('gt1-6').value).includes('are going to plant');
+  const sum = [ok1,ok2,ok3,ok4,ok5,ok6].filter(Boolean).length;
+  incAttempt(id); const att=getAttempts(id);
+  if (sum===6) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,10,10); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 (1)Are (2)going to plant (3)aren\'t (4)are not going to plant (5)are you going to plant (6)are going to plant'); awardScore(id,sum*10/6|0,10); applyLock(id); }
+    else showFeedback(id,'bad',`❌ ${sum}/6 נכון. נסה שוב!`);
+  }
+}
+
+// GT2 - AUNT BELLA
+function checkGT2() {
+  const id = 'gt-2';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = document.getElementById('gt2-1').value === 'Is';
+  const ok2 = norm(document.getElementById('gt2-2').value).startsWith('going to');
+  const ok3 = document.getElementById('gt2-3').value === 'isn\'t';
+  const ok4 = norm(document.getElementById('gt2-4').value).includes('not going to cook') || norm(document.getElementById('gt2-4').value).includes("isn't going to cook");
+  const ok5 = norm(document.getElementById('gt2-5').value).includes('going to cook');
+  const ok6 = norm(document.getElementById('gt2-6').value).includes('is she going to cook') || norm(document.getElementById('gt2-6').value).includes('she going to');
+  const sum = [ok1,ok2,ok3,ok4,ok5,ok6].filter(Boolean).length;
+  incAttempt(id); const att=getAttempts(id);
+  if (sum===6) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,10,10); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer',"📖 (1)Is (2)going to cook (3)isn't (4)is not going to cook (5)is going to cook (6)is she going to cook"); awardScore(id,sum*10/6|0,10); applyLock(id); }
+    else showFeedback(id,'bad',`❌ ${sum}/6 נכון. נסה שוב!`);
+  }
+}
+
+// PF1 - ING
+const ingAnswers = {b:'coming',c:'stopping',d:'studying',e:'getting',f:'leaving',g:'crying',h:'sitting',i:'meeting',j:'opening'};
+function checkPF1() {
+  const id = 'pf-1';
+  if (getAttempts(id) >= 2) return;
+  let correct = 0;
+  Object.entries(ingAnswers).forEach(([k,v]) => {
+    if (norm(document.getElementById('pf1-'+k).value) === v) correct++;
+  });
+  incAttempt(id); const att=getAttempts(id);
+  if (correct===9) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ כל התשובות נכונות!'); awardScore(id,18,18); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) {
+      const ans = Object.entries(ingAnswers).map(([k,v])=>k+'. '+v).join(' | ');
+      showFeedback(id,'answer','📖 ' + ans);
+      awardScore(id, correct*2, 18); applyLock(id);
+    } else showFeedback(id,'bad',`❌ ${correct}/9 נכון. שים לב לכללי האיות!`);
+  }
+}
+
+// PF2 - am/is/are + ing
+function checkPF2() {
+  const id = 'pf-2';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = norm(document.getElementById('pf2-b').value).includes('washing') || norm(document.getElementById('pf2-b').value)==='is washing';
+  const ok2 = norm(document.getElementById('pf2-c').value).includes('taking') || norm(document.getElementById('pf2-c').value)==='is taking';
+  const ok3 = norm(document.getElementById('pf2-d').value).includes('putting on') || norm(document.getElementById('pf2-d').value).includes('is putting');
+  const ok4 = norm(document.getElementById('pf2-e').value).includes('leaving') || norm(document.getElementById('pf2-e').value).includes('are leaving');
+  const correct=(ok1?2:0)+(ok2?2:0)+(ok3?2:0)+(ok4?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2&&ok3&&ok4) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,8,8); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 b.is washing | c.is taking | d.is putting on | e.are leaving'); awardScore(id,correct,8); applyLock(id); }
+    else showFeedback(id,'bad',`❌ ${correct/2}/4 נכון. נסה שוב!`);
+  }
+}
+
+// PF3a
+function checkPF3a() {
+  const id = 'pf-3a';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = norm(document.getElementById('pf3a-1').value).includes('are going');
+  const ok2 = norm(document.getElementById('pf3a-2').value).includes('am starting') || norm(document.getElementById('pf3a-2').value).includes("'m starting");
+  const correct=(ok1?2:0)+(ok2?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,4,4); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 (1) are going (2) am starting'); awardScore(id,correct,4); applyLock(id); }
+    else showFeedback(id,'bad','❌ נסה שוב!');
+  }
+}
+
+// PF3b
+function checkPF3b() {
+  const id = 'pf-3b';
+  if (getAttempts(id) >= 2) return;
+  const ok1=norm(document.getElementById('pf3b-1').value).includes("'m having")||norm(document.getElementById('pf3b-1').value).includes('am having');
+  const ok2=norm(document.getElementById('pf3b-2').value).includes('are coming');
+  const ok3=norm(document.getElementById('pf3b-3').value).includes('are taking');
+  const ok4=norm(document.getElementById('pf3b-4').value).includes('are leaving');
+  const correct=(ok1?2:0)+(ok2?2:0)+(ok3?2:0)+(ok4?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2&&ok3&&ok4) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,8,8); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 (1)am having (2)are coming (3)are taking (4)are leaving'); awardScore(id,correct,8); applyLock(id); }
+    else showFeedback(id,'bad',`❌ ${correct/2}/4 נכון. נסה!`);
+  }
+}
+
+// PF4 - now / future
+const nfAnswers = {nf1:'now',nf2:'future',nf3:'future',nf4:'now',nf5:'future'};
+function checkPF4() {
+  const id = 'pf-4';
+  if (getAttempts(id) >= 2) return;
+  let correct = 0;
+  Object.entries(nfAnswers).forEach(([name,ans]) => {
+    const r = document.querySelector(`input[name="${name}"]:checked`);
+    if (r && r.value === ans) correct++;
+  });
+  incAttempt(id); const att=getAttempts(id);
+  if (correct===5) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ כל התשובות נכונות!'); awardScore(id,10,10); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 1.now | 2.future | 3.future | 4.now | 5.future'); awardScore(id,correct*2,10); applyLock(id); }
+    else showFeedback(id,'bad',`❌ ${correct}/5 נכון. חפש ביטויי זמן (tomorrow, in a few days, soon).`);
+  }
+}
+
+// WILL-F - dialogue questions
+function checkWillF() {
+  const id = 'will-f';
+  if (getAttempts(id) >= 2) return;
+  const ok1 = norm(document.getElementById('wf1').value).includes('few minutes') || norm(document.getElementById('wf1').value).includes('a few');
+  const ok2 = norm(document.getElementById('wf2').value).includes('parking') || norm(document.getElementById('wf2').value).includes('won\'t find');
+  const ok3 = norm(document.getElementById('wf3').value).includes('parking lot') || norm(document.getElementById('wf3').value).includes('community center');
+  const correct=(ok1?2:0)+(ok2?2:0)+(ok3?2:0);
+  incAttempt(id); const att=getAttempts(id);
+  if (ok1&&ok2&&ok3) {
+    markDot(id,att,'correct'); showFeedback(id,'ok','✅ !'); awardScore(id,6,6); applyLock(id);
+  } else {
+    markDot(id,att,'wrong');
+    if (att>=2) { showFeedback(id,'answer','📖 1. In a few minutes. 2. Because Mark won\'t find a parking place. 3. In the parking lot of the Community Center.'); awardScore(id,correct,6); applyLock(id); }
+    else showFeedback(id,'bad','❌ קרא שוב את הדיאלוג.');
+  }
+}
+
+// SAVE PERSONAL (no scoring)
+function savePersonal(prefix) {
+  // just trigger the auto-save via input event (already done), show confirmation
+  const ids = {
+    'gt3': ['gt3-1','gt3-2','gt3-3','gt3-4'],
+    'w50': ['w50-a-ww','w50-b-ww','w50-c-ww','w50-d-ww','w50-e-ww'],
+    'myfuture': ['myfuture','myq1','myq2']
+  }[prefix] || [];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) ls('v_' + id, el.value);
+  });
+}
+
+// ── RESET TAB ──
+function resetTab(tabName) {
+  if (!confirm('לאפס את כל התשובות בטאב זה? הציון שלך עבור טאב זה יתאפס.')) return;
+
+  const tabExercises = {
+    'alice': {
+      inputs: ['a1-1','a1-2','a2-1','a2-2','a3-explain','a4','a5-1','a5-2','a5-3','a6-1','a6-2','a6-3','a6-4','a7-1','a7-2'],
+      radios: ['rq3'],
+      exids: ['alice-1','alice-2','alice-3','alice-4','alice-5','alice-6','alice-7']
+    },
+    'wantto': {
+      inputs: ['wtb2','wtb3','wtb4a','wtb4b'],
+      selects: ['wt2','wt3','wt4'],
+      exids: ['wt-a','wt-b']
+    },
+    'goingto': {
+      inputs: ['gt1-2','gt1-4','gt1-5','gt1-6','gt2-2','gt2-4','gt2-5','gt2-6','gt3-1','gt3-2','gt3-3','gt3-4'],
+      selects: ['gt1-1','gt1-3','gt2-1','gt2-3'],
+      exids: ['gt-1','gt-2']
+    },
+    'progfut': {
+      inputs: ['pf1-b','pf1-c','pf1-d','pf1-e','pf1-f','pf1-g','pf1-h','pf1-i','pf1-j','pf2-b','pf2-c','pf2-d','pf2-e','pf3a-1','pf3a-2','pf3b-1','pf3b-2','pf3b-3','pf3b-4'],
+      radios: ['nf1','nf2','nf3','nf4','nf5'],
+      exids: ['pf-1','pf-2','pf-3a','pf-3b','pf-4']
+    },
+    'will': {
+      inputs: ['wf1','wf2','wf3','myfuture','myq1','myq2'],
+      selects: ['w50-a-ww','w50-b-ww','w50-c-ww','w50-d-ww','w50-e-ww'],
+      exids: ['will-f']
+    }
+  }[tabName];
+
+  if (!tabExercises) return;
+
+  // clear inputs
+  (tabExercises.inputs || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.className = el.className.replace(' correct','').replace(' wrong','').replace(' locked',''); }
+    lsDel('v_' + id);
+  });
+  (tabExercises.selects || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.className = el.className.replace(' correct','').replace(' wrong','').replace(' locked',''); }
+    lsDel('v_' + id);
+  });
+  (tabExercises.radios || []).forEach(name => {
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r => { r.checked = false; });
+    lsDel('r_' + name);
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+      r.closest('.radio-opt')?.classList.remove('correct-opt','wrong-opt','locked');
+    });
+  });
+
+  // reset exercise state
+  tabExercises.exids.forEach(id => {
+    delete ATTEMPTS[id];
+    delete SCORED[id];
+    // reset dots
+    [1,2].forEach(n => {
+      const d = document.getElementById('d-' + id + '-' + n);
+      if (d) d.className = 'dot';
+    });
+    // hide feedback
+    const fb = document.getElementById('fb-' + id);
+    if (fb) { fb.className = 'feedback-msg'; fb.textContent = ''; }
+    // unlock btn
+    const btn = document.getElementById('btn-' + id);
+    if (btn) btn.disabled = false;
+    // unlock inputs
+    const card = document.getElementById('ex-' + id);
+    if (card) card.querySelectorAll('.locked').forEach(el => el.classList.remove('locked'));
+  });
+
+  ls('attempts', ATTEMPTS);
+  ls('scored', SCORED);
+  updateScoreBar();
+  // reset badge
+  const el = document.getElementById('badge-' + tabName);
+  if (el) el.textContent = '0';
+}
+
+// ── INIT ──
+window.addEventListener('load', restoreAll);
+</script>
+</body>
+</html>
